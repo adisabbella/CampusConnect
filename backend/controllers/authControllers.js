@@ -29,28 +29,29 @@ const signup = async (req, res) => {
 }
 
 const signin = async (req, res) => {
-    try {
-        const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-        const user = await User.findOne({ email });
-        if (!user) return res.status(401).json({ message: 'Invalid credentials.' });
+    const user = await User.findOne({ email });
+    if (!user) return res.status(401).json({ message: 'Invalid credentials.' });
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(401).json({ message: 'Invalid credentials.' });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ message: 'Invalid credentials.' });
 
-        const token = jwt.sign({ id: user._id }, secret, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, secret, { expiresIn: '1h' });
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            sameSite: 'strict', 
-            maxAge: 3600000 
-        });
+    res.cookie('token', token, {
+        httpOnly: true,
+        sameSite: 'strict', 
+        maxAge: 3600000 
+    });
 
-        return res.status(200).json({ message: 'Signed in successfully.' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error.' });
-    }
+    return res.status(200).json({ message: 'Signed in successfully.' });
+  } 
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
 };
 
 module.exports = { signup, signin };
