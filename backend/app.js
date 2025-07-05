@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const authRouter = require("./routes/authRoutes");
 const routeProtector = require("./middlewares/authMiddleware");
 const postRouter = require("./routes/postRoutes");
+const profileRouter = require("./routes/profileRoutes");
 connectDB();
 
 
@@ -16,7 +17,8 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 
 app.use(routeProtector);
-app.use('/post', postRouter);
+app.use('/posts', postRouter);
+app.use('/profile', profileRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

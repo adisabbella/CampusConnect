@@ -5,9 +5,9 @@ const {PostValidation} = require('../middlewares/validatePost');
 const checkQuery = require('../middlewares/validateQuery');
 const checkUpdateRequest = require("../middlewares/validateUpdate");
 
-router.post('/create', PostValidation, createPost);
-router.get('/view', checkQuery, viewPost);
-router.delete('/delete/:id', deletePost);
-router.patch('/edit/:id', checkUpdateRequest, editPost);
+router.post('/', PostValidation, createPost);
+router.get('/', checkQuery, viewPost);
+router.delete('/:id', deletePost);
+router.patch('/:id', checkUpdateRequest, editPost);
 
 module.exports = router;

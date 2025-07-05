@@ -38,7 +38,8 @@ const signin = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials.' });
 
-    const token = jwt.sign({ id: user._id }, secret, { expiresIn: '1h' });
+    const roll = email.substring(0, 6);
+    const token = jwt.sign({ id: user._id, rollno: roll }, secret, { expiresIn: '1h' });
 
     res.cookie('token', token, {
         httpOnly: true,

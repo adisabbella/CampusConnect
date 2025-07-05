@@ -8,7 +8,7 @@ const routeProtector = (req, res, next) => {
     }
     try {
       const decoded = jwt.verify(userToken, secret);
-      req.user = {id: decoded.id};
+      req.user = decoded;
       next();
     }
     catch {
